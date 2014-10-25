@@ -1,13 +1,10 @@
 package HttpServer.Request;
 
 import HttpServer.Response.HttpResponse;
-import HttpServer.Response.InvalidHttpResponse;
 import HttpServer.Response.NotFoundHttpResponse;
-import HttpServer.Response.ValidResponse;
+import HttpServer.Response.ValidHttpResponse;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public class DeleteRequest implements HttpRequest {
     private static final String WEB_ROOT = "C:\\Users\\zachvan\\Documents\\";
@@ -23,6 +20,6 @@ public class DeleteRequest implements HttpRequest {
         if (!fileToDelete.exists()) return new NotFoundHttpResponse();
 
         fileToDelete.delete();
-        return new ValidResponse(null);
+        return new ValidHttpResponse(null);
     }
 }

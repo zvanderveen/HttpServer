@@ -3,7 +3,7 @@ package HttpServer.Request;
 import HttpServer.Response.HttpResponse;
 import HttpServer.Response.InvalidHttpResponse;
 import HttpServer.Response.NotFoundHttpResponse;
-import HttpServer.Response.ValidResponse;
+import HttpServer.Response.ValidHttpResponse;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,7 +29,7 @@ public class GetRequest implements HttpRequest {
             byte[] fileData = new byte[fileLength];
             fileInputStream.read(fileData);
 
-            return new ValidResponse(fileData);
+            return new ValidHttpResponse(fileData);
         }
         catch (IOException exception) {
             return new InvalidHttpResponse();

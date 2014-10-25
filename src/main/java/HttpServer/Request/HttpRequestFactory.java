@@ -1,6 +1,9 @@
 package HttpServer.Request;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HttpRequestFactory {
     public static HttpRequest parseRequest(BufferedReader bufferedReader) {
@@ -27,6 +30,20 @@ public class HttpRequestFactory {
                     return new GetRequest(fileName);
                 case "DELETE":
                     return new DeleteRequest(fileName);
+                case "PUT":
+                    StringBuffer data = new StringBuffer();
+                    while (readString != null && readString.length() > 0) {
+                        readString = bufferedReader.readLine();
+                    }
+
+                    readString = bufferedReader.readLine();
+
+                    while (readString != null && readString.length() > 0) {
+                        data.append(readString);
+                        readString = bufferedReader.readLine();
+                    }
+
+                    return new PutRequest(fileName, data.toString().toCharArray());
             }
         } catch (IOException exception) {
             return new InvalidHttpRequest();

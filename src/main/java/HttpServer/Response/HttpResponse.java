@@ -1,7 +1,7 @@
 package HttpServer.Response;
 
-import java.io.PrintWriter;
+import java.io.Writer;
 
 public interface HttpResponse {
-    public void write(PrintWriter writer);
+    public void write(Writer writer);
 }
