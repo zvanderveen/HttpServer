@@ -5,7 +5,7 @@ import org.junit.Test;
 public class InvalidHttpResponseTest extends HttpResponseTest {
 
     @Test
-    public void ExecuteTest() {
-        ExecuteTest(new InvalidHttpResponse(), "400");
+    public void ResponseContains400Code() {
+        ResponseContainsCode(new InvalidHttpResponse(), "400");
     }
 }

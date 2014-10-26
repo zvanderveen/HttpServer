@@ -5,7 +5,7 @@ import org.junit.Test;
 public class NotFoundHttpResponseTest extends HttpResponseTest {
 
     @Test
-    public void ExecuteTest() {
-        ExecuteTest(new NotFoundHttpResponse(), "404");
+    public void ResponseContains404Code() {
+        ResponseContainsCode(new NotFoundHttpResponse(), "404");
     }
 }

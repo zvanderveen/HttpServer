@@ -10,7 +10,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class GetRequest implements HttpRequest {
-    private static final String WEB_ROOT = "C:\\Users\\zachvan\\Documents\\";
     String fileName;
 
     public GetRequest(String fileName) {
@@ -19,7 +18,7 @@ public class GetRequest implements HttpRequest {
 
     @Override
     public HttpResponse execute() {
-        File fileToGet = new File(WEB_ROOT + fileName);
+        File fileToGet = new File(fileName);
         if (!fileToGet.exists()) return new NotFoundHttpResponse();
 
         try (

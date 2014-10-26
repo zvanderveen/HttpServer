@@ -7,7 +7,6 @@ import HttpServer.Response.ValidHttpResponse;
 import java.io.File;
 
 public class DeleteRequest implements HttpRequest {
-    private static final String WEB_ROOT = "C:\\Users\\zachvan\\Documents\\";
     String fileName;
 
     public DeleteRequest(String fileName) {
@@ -16,7 +15,7 @@ public class DeleteRequest implements HttpRequest {
 
     @Override
     public HttpResponse execute() {
-        File fileToDelete = new File(WEB_ROOT + fileName);
+        File fileToDelete = new File(fileName);
         if (!fileToDelete.exists()) return new NotFoundHttpResponse();
 
         fileToDelete.delete();

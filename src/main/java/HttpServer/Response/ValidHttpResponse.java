@@ -18,11 +18,11 @@ public class ValidHttpResponse implements HttpResponse {
     @Override
     public void write(Writer writer) {
         try {
-            writer.write("HTTP/1.1 200 OK");
-            writer.write("Server: Java HTTP Server 1.0");
-            writer.write("Content-type: text/html");
-            writer.write("Content-length: " + data.length);
-            writer.write("Connection: close");
+            writer.write("HTTP/1.1 200 OK" + System.lineSeparator());
+            writer.write("Server: Java HTTP Server 1.0" + System.lineSeparator());
+            writer.write("Content-type: text/html" + System.lineSeparator());
+            writer.write("Content-length: " + data.length + System.lineSeparator());
+            writer.write("Connection: close" + System.lineSeparator());
             writer.write("");
             writer.write(new String(data));
             writer.flush();

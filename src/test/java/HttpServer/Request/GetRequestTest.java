@@ -5,27 +5,28 @@ import HttpServer.Response.NotFoundHttpResponse;
 import HttpServer.Response.ValidHttpResponse;
 import org.junit.Assert;
 import org.junit.Test;
+
 import java.io.IOException;
 
-public class DeleteRequestTest {
-    private final String FILE_TO_DELETE = "deleteme.txt";
+public class GetRequestTest {
+    private final String FILE_TO_GET = "getme.txt";
     private final String PATH_TO_FILE_THAT_EXISTS = "C:\\Users\\zachvan\\Documents\\";
 
     @Test
-    public void DeleteFileThatExists() throws IOException {
-        String fileName = PATH_TO_FILE_THAT_EXISTS + FILE_TO_DELETE;
+    public void GetFileThatExists() throws IOException {
+        String fileName = PATH_TO_FILE_THAT_EXISTS + FILE_TO_GET;
         RequestTestHelper.MakeSureFileExists(fileName);
-        DeleteRequest deleteRequest = new DeleteRequest(fileName);
-        HttpResponse httpResponse = deleteRequest.execute();
+        GetRequest getRequest = new GetRequest(fileName);
+        HttpResponse httpResponse = getRequest.execute();
         Assert.assertTrue(httpResponse instanceof ValidHttpResponse);
     }
 
     @Test
-    public void DeleteFileThatDoesNotExist() throws IOException {
-        String fileName = PATH_TO_FILE_THAT_EXISTS + FILE_TO_DELETE;
+    public void GetFileThatDoesNotExist() throws IOException {
+        String fileName = PATH_TO_FILE_THAT_EXISTS + FILE_TO_GET;
         RequestTestHelper.MakeSureFileDoesNotExist(fileName);
-        DeleteRequest deleteRequest = new DeleteRequest(fileName);
-        HttpResponse httpResponse = deleteRequest.execute();
+        GetRequest getRequest = new GetRequest(fileName);
+        HttpResponse httpResponse = getRequest.execute();
         Assert.assertTrue(httpResponse instanceof NotFoundHttpResponse);
     }
 }

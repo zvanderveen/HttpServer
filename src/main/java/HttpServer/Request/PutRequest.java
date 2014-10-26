@@ -9,7 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class PutRequest implements HttpRequest {
-    private static final String WEB_ROOT = "C:\\Users\\zachvan\\Documents\\";
     String fileName;
     char[] data;
 
@@ -20,7 +19,7 @@ public class PutRequest implements HttpRequest {
 
     @Override
     public HttpResponse execute() {
-        File fileToWrite = new File(WEB_ROOT + fileName);
+        File fileToWrite = new File(fileName);
 
         try (
             FileWriter fileWriter = new FileWriter(fileToWrite);

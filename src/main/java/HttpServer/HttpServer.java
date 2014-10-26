@@ -9,11 +9,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class HttpServer {
-    private static final int PORT = 8080;
-
-     public HttpServer() {
+     public HttpServer(int port) {
         try (
-                ServerSocket serverSocket = new ServerSocket(PORT)
+                ServerSocket serverSocket = new ServerSocket(port)
         ) {
             serverSocket.setReuseAddress(true);
 
@@ -26,7 +24,7 @@ public class HttpServer {
         }
      }
 
-    public void parseAndHandleRequest(Socket socket) throws IOException {
+    private void parseAndHandleRequest(Socket socket) throws IOException {
         try (
                 InputStream inputStream = socket.getInputStream();
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -43,6 +41,6 @@ public class HttpServer {
     }
 
     public static void main(String[] args) {
-        HttpServer myServer = new HttpServer();
+        HttpServer myServer = new HttpServer(8080);
     }
 }

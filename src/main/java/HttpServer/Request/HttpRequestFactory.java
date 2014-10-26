@@ -1,11 +1,10 @@
 package HttpServer.Request;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class HttpRequestFactory {
+    private static final String WEB_ROOT = "C:\\Users\\zachvan\\Documents\\";
+
     public static HttpRequest parseRequest(BufferedReader bufferedReader) {
         try {
             String readString = bufferedReader.readLine();
@@ -27,9 +26,9 @@ public class HttpRequestFactory {
 
             switch (action) {
                 case "GET":
-                    return new GetRequest(fileName);
+                    return new GetRequest(WEB_ROOT + fileName);
                 case "DELETE":
-                    return new DeleteRequest(fileName);
+                    return new DeleteRequest(WEB_ROOT + fileName);
                 case "PUT":
                     StringBuffer data = new StringBuffer();
                     while (readString != null && readString.length() > 0) {
@@ -43,7 +42,7 @@ public class HttpRequestFactory {
                         readString = bufferedReader.readLine();
                     }
 
-                    return new PutRequest(fileName, data.toString().toCharArray());
+                    return new PutRequest(WEB_ROOT + fileName, data.toString().toCharArray());
             }
         } catch (IOException exception) {
             return new InvalidHttpRequest();
