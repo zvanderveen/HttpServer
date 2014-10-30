@@ -23,7 +23,7 @@ public class ValidHttpResponse implements HttpResponse {
             writer.write("Content-type: text/html" + System.lineSeparator());
             writer.write("Content-length: " + data.length + System.lineSeparator());
             writer.write("Connection: close" + System.lineSeparator());
-            writer.write("");
+            writer.write(System.lineSeparator());
             writer.write(new String(data));
             writer.flush();
         }

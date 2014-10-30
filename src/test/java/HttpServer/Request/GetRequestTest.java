@@ -10,12 +10,13 @@ import java.io.IOException;
 
 public class GetRequestTest {
     private final String FILE_TO_GET = "getme.txt";
+    private final String FILE_DATA = "get";
     private final String PATH_TO_FILE_THAT_EXISTS = "C:\\Users\\zachvan\\Documents\\";
 
     @Test
     public void GetFileThatExists() throws IOException {
         String fileName = PATH_TO_FILE_THAT_EXISTS + FILE_TO_GET;
-        RequestTestHelper.MakeSureFileExists(fileName);
+        RequestTestHelper.MakeSureFileExists(fileName, FILE_DATA);
         GetRequest getRequest = new GetRequest(fileName);
         HttpResponse httpResponse = getRequest.execute();
         Assert.assertTrue(httpResponse instanceof ValidHttpResponse);

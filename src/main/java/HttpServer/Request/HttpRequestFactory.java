@@ -30,24 +30,24 @@ public class HttpRequestFactory {
                 case "DELETE":
                     return new DeleteRequest(WEB_ROOT + fileName);
                 case "PUT":
-                    StringBuffer data = new StringBuffer();
-                    while (readString != null && readString.length() > 0) {
-                        readString = bufferedReader.readLine();
-                    }
-
-                    readString = bufferedReader.readLine();
-
-                    while (readString != null && readString.length() > 0) {
-                        data.append(readString);
-                        readString = bufferedReader.readLine();
-                    }
-
-                    return new PutRequest(WEB_ROOT + fileName, data.toString().toCharArray());
+                    return new PutRequest(WEB_ROOT + fileName, parsePutBodyData(bufferedReader).toCharArray());
             }
         } catch (IOException exception) {
             return new InvalidHttpRequest();
         }
 
         return new InvalidHttpRequest();
+    }
+
+    private static String parsePutBodyData(BufferedReader bufferedReader) throws IOException {
+        StringBuffer data = new StringBuffer();
+        for (String readString = bufferedReader.readLine(); readString.length() > 0; readString = bufferedReader.readLine()) {
+        }
+
+        for (String readString = bufferedReader.readLine(); readString.length() > 0; readString = bufferedReader.readLine()) {
+            data.append(readString);
+        }
+
+        return data.toString();
     }
 }

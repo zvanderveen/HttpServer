@@ -9,12 +9,13 @@ import java.io.IOException;
 
 public class DeleteRequestTest {
     private final String FILE_TO_DELETE = "deleteme.txt";
+    private final String FILE_DATA = "delete";
     private final String PATH_TO_FILE_THAT_EXISTS = "C:\\Users\\zachvan\\Documents\\";
 
     @Test
     public void DeleteFileThatExists() throws IOException {
         String fileName = PATH_TO_FILE_THAT_EXISTS + FILE_TO_DELETE;
-        RequestTestHelper.MakeSureFileExists(fileName);
+        RequestTestHelper.MakeSureFileExists(fileName, FILE_DATA);
         DeleteRequest deleteRequest = new DeleteRequest(fileName);
         HttpResponse httpResponse = deleteRequest.execute();
         Assert.assertTrue(httpResponse instanceof ValidHttpResponse);

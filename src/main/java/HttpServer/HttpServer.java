@@ -30,11 +30,11 @@ public class HttpServer {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 OutputStream outputStream = socket.getOutputStream();
-                PrintWriter headerWriter = new PrintWriter(outputStream);
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
         ) {
             HttpRequest httpRequest = HttpRequestFactory.parseRequest(bufferedReader);
             HttpResponse httpResponse = httpRequest.execute();
-            httpResponse.write(headerWriter);
+            httpResponse.write(outputStreamWriter);
         } catch (IOException exception) {
             System.out.println("Did not process request");
         }

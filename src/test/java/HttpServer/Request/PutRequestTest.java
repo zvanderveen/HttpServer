@@ -16,7 +16,7 @@ public class PutRequestTest {
     @Test
     public void PutFileThatExists() throws IOException {
         String fileName = PATH_TO_FILE_THAT_EXISTS + FILE_TO_PUT;
-        RequestTestHelper.MakeSureFileExists(fileName);
+        RequestTestHelper.MakeSureFileExists(fileName, FILE_DATA);
         PutRequest putRequest = new PutRequest(fileName, FILE_DATA.toCharArray());
         HttpResponse httpResponse = putRequest.execute();
         Assert.assertTrue(httpResponse instanceof ValidHttpResponse);
