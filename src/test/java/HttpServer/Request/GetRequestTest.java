@@ -24,7 +24,7 @@ public class GetRequestTest {
 
     @Test
     public void GetFileThatDoesNotExist() throws IOException {
-        String fileName = PATH_TO_FILE_THAT_EXISTS + FILE_TO_GET;
+        String fileName = PATH_TO_FILE_THAT_EXISTS + "dont" + FILE_TO_GET;
         RequestTestHelper.MakeSureFileDoesNotExist(fileName);
         GetRequest getRequest = new GetRequest(fileName);
         HttpResponse httpResponse = getRequest.execute();
