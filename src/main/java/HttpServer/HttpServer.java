@@ -1,7 +1,6 @@
 package HttpServer;
 
 import HttpServer.Request.HttpRequest;
-import HttpServer.Request.HttpRequestFactory;
 import HttpServer.Response.HttpResponse;
 
 import java.io.*;
@@ -32,7 +31,7 @@ public class HttpServer {
                 OutputStream outputStream = socket.getOutputStream();
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
         ) {
-            HttpRequest httpRequest = HttpRequestFactory.parseRequest(bufferedReader);
+            HttpRequest httpRequest = HttpRequestHandler.parseRequest(bufferedReader);
             HttpResponse httpResponse = httpRequest.execute();
             httpResponse.write(outputStreamWriter);
         } catch (IOException exception) {

@@ -1,8 +1,10 @@
-package HttpServer.Request;
+package HttpServer;
+
+import HttpServer.Request.*;
 
 import java.io.*;
 
-public class HttpRequestFactory {
+public class HttpRequestHandler {
     private static final String WEB_ROOT = "C:\\Users\\zachvan\\Documents\\";
 
     public static HttpRequest parseRequest(BufferedReader bufferedReader) {
@@ -11,11 +13,6 @@ public class HttpRequestFactory {
             if (readString == null) return new InvalidHttpRequest();
             String[] splitLine = readString.split(" ");
 
-            // logging
-            for(String entry : splitLine) {
-                System.out.println(entry);
-            }
-
             if (splitLine.length < 3) return new InvalidHttpRequest();
 
             String fileName = splitLine[1];
@@ -23,6 +20,8 @@ public class HttpRequestFactory {
             if (fileName.equals("")) return new InvalidHttpRequest();
 
             String action = splitLine[0];
+
+            ignoreHeaders(bufferedReader);
 
             switch (action) {
                 case "GET":
@@ -39,10 +38,13 @@ public class HttpRequestFactory {
         return new InvalidHttpRequest();
     }
 
-    private static String parsePutBodyData(BufferedReader bufferedReader) throws IOException {
-        StringBuffer data = new StringBuffer();
+    protected static void ignoreHeaders(BufferedReader bufferedReader) throws IOException {
         for (String readString = bufferedReader.readLine(); readString.length() > 0; readString = bufferedReader.readLine()) {
         }
+    }
+
+    protected static String parsePutBodyData(BufferedReader bufferedReader) throws IOException {
+        StringBuffer data = new StringBuffer();
 
         for (String readString = bufferedReader.readLine(); readString.length() > 0; readString = bufferedReader.readLine()) {
             data.append(readString);
