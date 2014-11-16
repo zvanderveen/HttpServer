@@ -1,46 +1,72 @@
 package HttpServer;
 
 import HttpServer.Request.*;
+import HttpServer.Response.HttpResponse;
 
 import java.io.*;
+import java.net.Socket;
 
-public class HttpRequestHandler {
-    private static final String WEB_ROOT = "C:\\Users\\zachvan\\Documents\\";
+public class HttpRequestHandler implements  IHttpRequestHandler {
+    protected String fileName;
+    protected String action;
 
-    public static HttpRequest parseRequest(BufferedReader bufferedReader) {
+    @Override
+    public void parseAndHandleRequest(Socket socket, String baseDir) {
+        try (
+                InputStream inputStream = socket.getInputStream();
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                OutputStream outputStream = socket.getOutputStream();
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+        ) {
+            HttpRequest httpRequest = parseRequest(bufferedReader, baseDir);
+            HttpResponse httpResponse = httpRequest.execute();
+            httpResponse.write(outputStreamWriter);
+        } catch (IOException exception) {
+            System.out.println("Did not process request");
+        }
+    }
+
+    protected HttpRequest parseRequest(BufferedReader bufferedReader, String baseDir) {
         try {
-            String readString = bufferedReader.readLine();
-            if (readString == null) return new InvalidHttpRequest();
-            String[] splitLine = readString.split(" ");
-
-            if (splitLine.length < 3) return new InvalidHttpRequest();
-
-            String fileName = splitLine[1];
-            fileName = fileName.substring(1);
-            if (fileName.equals("")) return new InvalidHttpRequest();
-
-            String action = splitLine[0];
-
+            parseCommand(bufferedReader);
             ignoreHeaders(bufferedReader);
-
-            switch (action) {
-                case "GET":
-                    return new GetRequest(WEB_ROOT + fileName);
-                case "DELETE":
-                    return new DeleteRequest(WEB_ROOT + fileName);
-                case "PUT":
-                    return new PutRequest(WEB_ROOT + fileName, parsePutBodyData(bufferedReader).toCharArray());
-            }
+            return processRequest(bufferedReader, baseDir);
         } catch (IOException exception) {
             return new InvalidHttpRequest();
         }
-
-        return new InvalidHttpRequest();
     }
 
-    protected static void ignoreHeaders(BufferedReader bufferedReader) throws IOException {
+    protected void parseCommand(BufferedReader bufferedReader) throws IOException {
+        String readString = bufferedReader.readLine();
+        if (readString == null) throw new IllegalArgumentException();
+        String[] splitLine = readString.split(" ");
+
+        if (splitLine.length < 3) throw new IllegalArgumentException();
+
+        this.fileName = splitLine[1];
+        fileName = fileName.substring(1);
+        if (fileName.equals("")) throw new IllegalArgumentException();
+
+        this.action = splitLine[0];
+    }
+
+    protected void ignoreHeaders(BufferedReader bufferedReader) throws IOException {
         for (String readString = bufferedReader.readLine(); readString.length() > 0; readString = bufferedReader.readLine()) {
         }
+    }
+
+    protected HttpRequest processRequest(BufferedReader bufferedReader, String baseDir) throws IOException {
+        switch (action) {
+            case "GET":
+                return new GetRequest(baseDir + fileName);
+            case "DELETE":
+                return new DeleteRequest(baseDir + fileName);
+            case "PUT":
+                return new PutRequest(baseDir + fileName, parsePutBodyData(bufferedReader).toCharArray());
+        }
+
+        return new InvalidHttpRequest();
     }
 
     protected static String parsePutBodyData(BufferedReader bufferedReader) throws IOException {

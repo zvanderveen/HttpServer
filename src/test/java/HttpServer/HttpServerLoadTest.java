@@ -15,8 +15,8 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import javax.ws.rs.core.UriBuilder;
 
 public class HttpServerLoadTest {
-    static final int PORT_A = 8080;
-    static final int PORT_B = 8081;
+    static final int PORT_A = 8090;
+    static final int PORT_B = 8091;
     static final String FILE_A_NAME = "file_a.txt";
     static final String FILE_B_NAME = "file_b.txt";
     static final String FILE_A_TEXT = "file a text";
@@ -52,7 +52,7 @@ public class HttpServerLoadTest {
     private void StartServerOnPort(final int port) {
         new Thread() {
             public void run() {
-                HttpServer httpServer = new HttpServer(port);
+                HttpServer httpServer = new HttpServer(port, "C:\\Users\\zachvan\\Documents\\", new HttpRequestHandler());
             }
         }.start();
     }

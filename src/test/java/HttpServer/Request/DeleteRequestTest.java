@@ -13,6 +13,13 @@ public class DeleteRequestTest {
     private final String PATH_TO_FILE_THAT_EXISTS = "C:\\Users\\zachvan\\Documents\\";
 
     @Test
+    public void regexTest() {
+        String blogPost = "a few lines<br><br/><br>and a few more<br>";
+        blogPost = blogPost.replaceFirst("^(?i)(<br>|<br/>)+","");
+        System.out.println(blogPost);
+    }
+
+    @Test
     public void DeleteFileThatExists() throws IOException {
         String fileName = PATH_TO_FILE_THAT_EXISTS + FILE_TO_DELETE;
         RequestTestHelper.MakeSureFileExists(fileName, FILE_DATA);
