@@ -6,6 +6,10 @@ import java.io.Writer;
 public class ValidHttpResponse implements HttpResponse {
     byte[] data;
 
+    public ValidHttpResponse() {
+        this.data = null;
+    }
+
     public ValidHttpResponse(byte[] data) {
         if (data != null) {
             this.data = data;
