@@ -7,7 +7,7 @@ public class ValidHttpResponse implements HttpResponse {
     byte[] data;
 
     public ValidHttpResponse() {
-        this.data = null;
+        this.data = new byte[0];
     }
 
     public ValidHttpResponse(byte[] data) {
