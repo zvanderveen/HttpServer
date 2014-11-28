@@ -3,6 +3,7 @@ package HttpServer.Request;
 import HttpServer.Response.HttpResponse;
 import HttpServer.Response.InvalidHttpResponse;
 import HttpServer.Response.ValidHttpResponse;
+import com.google.common.base.Throwables;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,16 +20,28 @@ public class PutRequest implements HttpRequest {
 
     @Override
     public HttpResponse execute() {
-        File fileToWrite = new File(fileName);
+        writeFile();
+        return new ValidHttpResponse();
+    }
+
+    protected void writeFile() {
+        File file = new File(fileName);
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Throwables.propagate(e);
+        }
 
         try (
-            FileWriter fileWriter = new FileWriter(fileToWrite);
+                FileWriter fileWriter = new FileWriter(file);
         ) {
             fileWriter.write(data);
-            return new ValidHttpResponse(null);
-        }
-        catch (IOException exception) {
-            return new InvalidHttpResponse();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Throwables.propagate(e);
         }
     }
 }
